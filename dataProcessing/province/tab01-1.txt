@@ -1,0 +1,15 @@
+		(1)	(2)	(3)	(4)	(5)	(6)
+VARIABLES	LABELS	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect
+							
+lnviirslpc	lnviirslpc	0.553***	0.296***	0.267***			
+		(0.020)	(0.072)	(0.030)			
+lnviirslpc2	lnviirslpc2				0.333***	0.212***	0.263***
+					(0.014)	(0.030)	(0.031)
+							
+Observations		679	679	679	679	679	679
+Regional FE		NO	NO	YES	NO	NO	YES
+Year FE		NO	NO	YES	NO	NO	YES
+R2		0.524	0.524	0.825	0.463	0.463	0.883
+RMSE		0.609	0.364	0.106	0.647	0.278	0.107
+Standard errors in parentheses							
+*** p<0.01, ** p<0.05, * p<0.1							

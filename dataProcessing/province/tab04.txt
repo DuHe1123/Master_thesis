@@ -1,0 +1,53 @@
+		(1)	(2)	(3)	(4)	(5)	(6)	(7)	(8)	(9)	(10)	(11)	(12)	(13)	(14)	(15)	(16)	(17)	(18)	(19)	(20)	(21)
+VARIABLES	LABELS	Model1	Model2	Model3	Model1	Model2	Model3	Model1	Model2	Model3	Model1	Model2	Model3	Model1	Model2	Model3	Model1	Model2	Model3	Model1	Model2	Model3
+																						
+bmpc	bmpc	0.003	0.046																			
+		(0.009)	(0.047)																			
+c.bmpc#c.bmpc			-0.000																			
+			(0.000)																			
+lnbmpc	lnbmpc			-0.244																		
+				(0.196)																		
+ccnlpc	ccnlpc				0.001	-0.024*																
+					(0.004)	(0.013)																
+c.ccnlpc#c.ccnlpc						0.000**																
+						(0.000)																
+lnccnlpc	lnccnlpc						0.206***															
+							(0.064)															
+hdmsppc	hdmsppc							-0.001	-0.018**													
+								(0.003)	(0.009)													
+c.hdmsppc#c.hdmsppc									0.000**													
+									(0.000)													
+lnhdmsppc	lnhdmsppc									0.205***												
+										(0.066)												
+hviirspc	hviirspc										-0.000	-0.000										
+											(0.000)	(0.000)										
+c.hviirspc#c.hviirspc												0.000										
+												(0.000)										
+lnhviirspc	lnhviirspc												0.005									
+													(0.025)									
+viirspc	viirspc													-0.000	-0.002**							
+														(0.000)	(0.001)							
+c.viirspc#c.viirspc															0.000**							
+															(0.000)							
+lnviirspc	lnviirspc															0.041						
+																(0.102)						
+viirslpc	viirslpc																0.007	-0.026				
+																	(0.010)	(0.019)				
+c.viirslpc#c.viirslpc																		0.000**				
+																		(0.000)				
+lnviirslpc	lnviirslpc																		0.267***			
+																			(0.030)			
+egdppc	egdppc																			-0.000	0.000	
+																				(0.000)	(0.000)	
+c.egdppc#c.egdppc																					-0.000	
+																					(0.000)	
+lnegdppc	lnegdppc																					0.520***
+																						(0.156)
+																						
+Observations		307	307	307	677	677	677	677	677	677	276	276	276	276	276	276	679	679	679	863	863	863
+Regional FE		YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES
+Year FE		YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES	YES
+R2		0.125	0.00427	0.386	0.615	0.352	0.815	0.563	0.303	0.802	0.128	0.139	0.153	0.139	0.132	0.144	0.633	0.558	0.825	0.612	0.664	0.758
+RMSE		0.814	0.815	0.0929	0.643	0.594	0.103	0.642	0.591	0.104	0.791	0.790	0.0904	0.788	0.775	0.0903	0.989	0.930	0.106	0.956	0.949	0.121
+Robust standard errors in parentheses																						
+*** p<0.01, ** p<0.05, * p<0.1																						

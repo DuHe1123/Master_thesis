@@ -1,0 +1,32 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+                    &         SAR         &         SEM         \\
+                    &    b/se/AIC         &    b/se/AIC         \\
+\hline
+gdpgr               &                     &                     \\
+gdp2000             &    -194.209\sym{***}&    -506.026\sym{***}\\
+                    &     (6.054)         &     (8.043)         \\
+                    &                     &                     \\
+Constant            &     206.270\sym{***}&     618.785\sym{***}\\
+                    &     (6.604)         &     (8.128)         \\
+                    &                     &                     \\
+\hline
+WqueenS             &                     &                     \\
+gdpgr               &       0.694\sym{***}&                     \\
+                    &     (0.011)         &                     \\
+                    &                     &                     \\
+e.gdpgr             &                     &       0.896\sym{***}\\
+                    &                     &     (0.008)         \\
+                    &                     &                     \\
+\hline
+/                   &                     &                     \\
+var(e.gdpgr)        &    3492.548\sym{***}&    1790.698\sym{***}\\
+                    &    (93.862)         &    (49.047)         \\
+                    &                     &                     \\
+\hline
+Observations        &        2850         &        2850         \\
+\hline\hline
+\end{tabular}
+}

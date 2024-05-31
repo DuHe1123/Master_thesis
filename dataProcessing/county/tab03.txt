@@ -1,0 +1,24 @@
+		(1)	(2)	(3)	(4)	(5)	(6)	(7)	(8)	(9)	(10)	(11)	(12)	(13)	(14)	(15)	(16)	(17)	(18)	(19)	(20)	(21)
+VARIABLES	LABELS	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect
+																						
+lnbmpc	lnbmpc	-0.057***	-0.096***	0.832***																		
+		(0.005)	(0.011)	(0.023)																		
+lnccnlpc	lnccnlpc				0.629***	0.576***	0.228***															
+					(0.005)	(0.014)	(0.020)															
+lnhdmsppc	lnhdmsppc							0.628***	0.562***	0.257***												
+								(0.005)	(0.016)	(0.021)												
+lnhviirspc	lnhviirspc										0.241***	0.210***	0.379***									
+											(0.008)	(0.019)	(0.032)									
+lnviirspc	lnviirspc													0.341***	0.295***	0.439***						
+														(0.005)	(0.014)	(0.028)						
+lnviirslpc	lnviirslpc																0.518***	0.524***	0.123***			
+																	(0.002)	(0.007)	(0.007)			
+lnegdppc	lnegdppc																			0.449***	0.391***	0.779***
+																				(0.005)	(0.015)	(0.035)
+																						
+Observations		14,977	14,977	14,977	18,947	18,947	18,947	18,925	18,925	18,925	13,662	13,662	13,662	13,663	13,663	13,663	31,008	31,008	31,008	27,783	27,783	27,783
+R-squared		0.010	0.032	0.625	0.500	0.475	0.872	0.431	0.404	0.874	0.070	0.052	0.462	0.223	0.170	0.499	0.620	0.686	0.894	0.239	0.229	0.919
+Regional FE		NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES
+Year FE		NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES
+Standard errors in parentheses																						
+*** p<0.01, ** p<0.05, * p<0.1																						

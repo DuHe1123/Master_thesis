@@ -1,0 +1,28 @@
+SgnYear [统计年度] - null
+AreaID [地区编码ID] - null
+CountyName [县域名称] - null
+PrefLevCity [所属地级市] - null
+Province [所属省份] - null
+CountyCode [县域代码] - null
+
+FixAst [固定资产投资] - null
+
+TotalImpExp [进出口总额] - null
+Import [进口总额] - null
+Export [出口总额] - null
+
+PopNum [年末户籍人口数] - null
+
+Pop_Agr [年末户籍人口数-农业] - null
+Pop_NonAgr [年末户籍人口数-非农业] - null
+
+ResdPop_Urban [年末常住人口数-城镇] - null
+ResdPop_Rural [年末常住人口数-乡村] - null
+
+RegGDP [地区生产总值] - null
+RegGDP_Primary [第一产业生产总值] - null
+RegGDP_Secondary [第二产业生产总值] - null
+RegGDP_Tertiary [第三产业生产总值] - null
+PerRegGDP [人均生产总值] - null
+
+HighwayLength [公路里程] - null
