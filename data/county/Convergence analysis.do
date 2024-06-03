@@ -1,7 +1,7 @@
 clear all
 
 *Import Weight Matrix
-cd "D:\Github Desktop\Master_thesis\dataProcessing\county"
+cd "D:\Github Desktop\Master_thesis\data\county"
 use "W_matrix2.dta", replace
 gen id = _n
 order id, first
@@ -14,8 +14,8 @@ spmatrix summarize WqueenS
 
 
 *Import data
-use "ADM3egdp.dta", replace
-drop if citycode == 460300
+use "ADM3.dta", replace
+*drop if citycode == 460300
 egen id = group(countycode)
 xtset countycode year
 order id year
@@ -35,7 +35,7 @@ label values location location_label
 
 *Prepare the data
 drop if year >= 2020
-
+keep id year county countycode city citycode province provincecode egdp3m location
 *replace perreggdp = reggdp / (popnum * 10000) if missing(perreggdp)
 *gen lngdp = ln(perreggdp + 1)
 *gen lnvl = ln(vl3m + 1)
@@ -59,11 +59,11 @@ gen gdpgr = ((gdp2019 / gdp1992) - 1) *100
 xtset, clear
 spset id
 
+spatgsa gdp1992, weights(WqueenS) moran
 
-
-
-
-
+*Compute global moran's I
+*spatwmat using "W_matrix2.dta", name(W) standardize
+*spatgsa gdp1992, weights(W) moran
 
 
 

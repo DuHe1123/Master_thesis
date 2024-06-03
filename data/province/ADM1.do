@@ -1,7 +1,7 @@
 *Import data
 clear all
 
-import delimited "D:\Github Desktop\Master_thesis\dataProcessing\province\ADM1.csv"
+import delimited "D:\Github Desktop\Master_thesis\data\province\ADM1.csv"
 
 *set panel
 xtset regionid year

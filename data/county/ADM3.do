@@ -1,10 +1,10 @@
 *Import data
 clear all
 
-import delimited "D:\Github Desktop\Master_thesis\dataProcessing\county\ADM3.csv"
+import delimited "D:\Github Desktop\Master_thesis\data\county\ADM3.csv"
 
 *set panel
-xtset regionid year
+xtset countycode year
 
 /// Validation of total sum of lights to total GDP
 
