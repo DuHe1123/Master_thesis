@@ -34,53 +34,84 @@ label define location_label 1 "Central" 2 "Western" 3 "Eastern" 4 "Northeastern"
 label values location location_label
 
 *Prepare the data
-drop if year >= 2020
-keep id year county countycode city citycode province provincecode egdp3m location
-*replace perreggdp = reggdp / (popnum * 10000) if missing(perreggdp)
-*gen lngdp = ln(perreggdp + 1)
-*gen lnvl = ln(vl3m + 1)
+replace reggdp_primary = . if reggdp_primary > reggdp
 
-*xtreg lngdp lnvl i.year i.provincecode // approach 2
-*predict xb, xb
-*predict u, u
-*replace u = 0 if missing(u)
-*gen plngdp = xb + u
+*Log transformation
+gen lngdp = log(reggdp * 10000 + 1)
+gen lnvl = log(vl3s * 10000 + 1)
+gen lnpgdp = log(reggdp_primary * 10000 + 1)
+gen lnnpp = log(modnpp * 10000 + 1)
+gen lngdppc = log(perreggdp * 10000 + 1)
+gen lnvlpc = log(vl3m * 10000 + 1)
 
-*Take log
-gen gdp = ln(egdp3m*100)
+*Predict GDP
+quietly xtreg lngdp lnvl i.year i.citycode
+predict plngdp, xb
+
+*Predict GDPpc
+quietly xtreg lngdppc lnvlpc i.year i.citycode
+predict plngdppc, xb
+
+*Predict Primary GDP
+quietly xtreg lnpgdp lnnpp i.year i.citycode
+predict plnpgdp, xb
+
+replace modis_type10 = 0 if missing(modis_type10)
+replace modis_type12 = 0 if missing(modis_type12)
+replace modis_type13 = 0 if missing(modis_type13)
+replace modis_type14 = 0 if missing(modis_type14)
+
+gen nonagri_share = (exp(plngdp) - exp(plnpgdp)) / exp(plngdp)
+gen urbanland = log(modis_type13)
+replace urbanland = 0 if missing(urbanland)
+gen urbanland_share = modis_type13 / total_are
+gen cropland = log(modis_type10 + modis_type12 + modis_type14)
+replace cropland = 0 if missing(cropland)
+gen cropland_share = (modis_type10 + modis_type12 + modis_type14) / total_are
+gen popden = log(totalpop / total_area)
+gen urbanization = urban_pop / totalpop
+
+drop if year <= 2000 | year >= 2022
+
+*gen lagged_plngdppc = L.plngdppc
+*gen plngdppc_gr = plngdppc - lagged_plngdppc
+
+keep if year == 2001 | year == 2021
 
 *Reshape
-drop egdp3m
-reshape wide gdp, i(id) j(year)
+keep id year county countycode city citycode province provincecode plngdppc urbanland urbanland_share cropland cropland_share popden urbanization nonagri_share location
+
+reshape wide plngdppc urbanland urbanland_share cropland cropland_share popden urbanization nonagri_share, i(id) j(year)
 
 *Generate GDP growth rate
-gen gdpgr = ((gdp2019 / gdp1992) - 1) *100
+gen gdpgr = (plngdppc2021 - plngdppc2001) / 20
 
 xtset, clear
 spset id
 
-spatgsa gdp1992, weights(WqueenS) moran
+*spatgsa gdp1992, weights(WqueenS) moran
 
 *Compute global moran's I
 *spatwmat using "W_matrix2.dta", name(W) standardize
 *spatgsa gdp1992, weights(W) moran
 
-
+global ylist gdpgr
+global xlist plngdppc2001 urbanization2001 popden2001 nonagri_share2001
 
 *Global
 *OLS
-reg gdpgr gdp1992
+reg $ylist $xlist
 estimate store OLS
 estat ic
 mat s=r(S)
 quietly estadd scalar AIC = s[1,5]
 
 *Moran's I
-quietly reg gdpgr gdp1992
+quietly reg $ylist $xlist
 estat moran, errorlag(WqueenS)
 
 *SAR
-spregress gdpgr gdp1992, ml dvarlag(WqueenS)
+spregress $ylist $xlist, ml dvarlag(WqueenS)
 eststo SAR
 
 estat ic
@@ -90,7 +121,7 @@ quietly estadd scalar AIC = s[1,5]
 estat impact
 
 *SEM
-spregress gdpgr gdp1992, ml errorlag(WqueenS)
+spregress $ylist $xlist, ml errorlag(WqueenS)
 eststo SEM
 
 estat ic
@@ -100,7 +131,7 @@ quietly estadd scalar AIC = s[1,5]
 estat impact
 
 *SLX
-spregress gdpgr gdp1992, ml ivarlag(WqueenS: gdp1992)
+spregress $ylist $xlist, ml ivarlag(WqueenS: $xlist)
 eststo SLX
 
 estat ic
@@ -110,7 +141,7 @@ quietly estadd scalar AIC = s[1,5]
 estat impact
 
 *SDM
-spregress gdpgr gdp1992, ml dvarlag(WqueenS) ivarlag(WqueenS: gdp1992)
+spregress $ylist $xlist, ml dvarlag(WqueenS) ivarlag(WqueenS: $xlist)
 eststo SDM
 
 estat ic
@@ -144,14 +175,14 @@ testnl ([WqueenS]gdp1992 = -[WqueenS]gdpgr*[gdpgr]gdp1992)
 
 *Central
 *OLS
-reg gdpgr gdp1992 if location == 1
+reg $ylist $xlist if location == 1
 estimate store cOLS
 estat ic
 mat s=r(S)
 quietly estadd scalar AIC = s[1,5]
 
 *SAR
-spregress gdpgr gdp1992 if location == 1, ml dvarlag(WqueenS) force
+spregress $ylist $xlist if location == 1, ml dvarlag(WqueenS) force
 eststo cSAR
 
 estat ic
