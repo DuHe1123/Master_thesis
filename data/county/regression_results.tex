@@ -1,0 +1,36 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Regression Results}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}\\
+                    &\multicolumn{1}{c}{OLS}&\multicolumn{1}{c}{SAR}\\
+                    &        b/se         &        b/se         \\
+\hline
+main                &                     &                     \\
+2001 plngdppc       &      -0.047\sym{***}&      -0.028\sym{***}\\
+                    &     (0.005)         &     (0.005)         \\
+2001 popden         &       0.026\sym{***}&       0.019\sym{***}\\
+                    &     (0.002)         &     (0.001)         \\
+2001 nonagri\_share  &       0.000\sym{**} &       0.000\sym{*}  \\
+                    &     (0.000)         &     (0.000)         \\
+2001 urbanization   &      -0.003\sym{***}&      -0.002\sym{***}\\
+                    &     (0.000)         &     (0.000)         \\
+Constant            &       2.560\sym{***}&       1.694\sym{***}\\
+                    &     (0.041)         &     (0.053)         \\
+\hline
+WqueenS             &                     &                     \\
+gdpgr               &                     &       0.323\sym{***}\\
+                    &                     &     (0.014)         \\
+\hline
+/                   &                     &                     \\
+var(e.gdpgr)        &                     &       0.010\sym{***}\\
+                    &                     &     (0.000)         \\
+\hline
+ll                  &        2264         &        2503         \\
+aic                 &       -4517         &       -4992         \\
+bic                 &       -4487         &       -4951         \\
+N                   &        2848         &        2848         \\
+\hline\hline
+\end{tabular}
+\end{table}

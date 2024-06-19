@@ -4,12 +4,11 @@ capture log close
 set more off
 version 17
 
-cd "D:\CSMAR data\dataProcessing\county" 
+cd "D:\Github Desktop\Master_thesis\data\county" 
 
 *use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/county_predicted.dta" // County-level
-use "ADM3.dta" // City-level
+use "CleanData.dta" // City-level
 
-import delimited "D:\CSMAR data\dataProcessing\county\elecgdp.csv"
 *-------------------------------------------------------
 ***************** Define global parameters*************
 *-------------------------------------------------------
@@ -17,7 +16,7 @@ import delimited "D:\CSMAR data\dataProcessing\county\elecgdp.csv"
 * dataset name
 *global dataSet county_predicted
 * variable to be studied
-global xVar trend_gdp
+global xVar trend_plngdppc
 * label of the variable
 global xVarLabel Trend log GDPpc Predicted
 * Names of cross-sectional units
@@ -28,12 +27,8 @@ global timeUnit year
 *-------------------------------------------------------
 ***************** Start log file************************
 *-------------------------------------------------------
-gen gdp = ln(total_sol*100)
-egen id = group(countycode)
-drop if year >= 2020
-drop if gdp == .
-log using "club-identification.txt", text replace
 
+log using "club-identification.txt", text replace
 
 *-------------------------------------------------------
 ***************** Import and set dataset  **************
@@ -44,7 +39,7 @@ log using "club-identification.txt", text replace
 
 * keep necessary variables
 *rename city_id id 
-keep id regionid city citycode province provincecode gdp ${csUnitName} ${timeUnit} 
+*keep id countycode city citycode province provincecode plngdppc ${csUnitName} ${timeUnit} 
 order id ${timeUnit} county
 
 * set panel data
@@ -55,7 +50,7 @@ xtset id ${timeUnit}
 *-------------------------------------------------------
 
 *Filter total gdppc
-pfilter gdp, method(hp) trend(trend_gdp) smooth(400)
+pfilter plngdppc, method(hp) trend(trend_plngdppc) smooth(400)
 
 *-------------------------------------------------------
 ***************** Apply PS convergence test  ***********
@@ -102,8 +97,9 @@ putexcel A1 = ("Final Clubs for total gdppc"), font(bold) border(bottom)
 putexcel A2 = matrix(result31), names nformat("#.##") overwritefmt
 
 
-sum fclub_trend_gdp
+sum fclub_${xVar}
 
+save "Data_clubs.dta", replace
 
 *-------------------------------------------------------
 ***************** Generate relative variable (for ploting)
@@ -127,45 +123,6 @@ sort id ${timeUnit}
 
 drop if id == 999999
 rm "temporary1.dta"
-
-
-save "temporary2.dta",replace
-use  "temporary2.dta"
-
-collapse ${xVar2}, by(${timeUnit})
-gen  id=999999
-append using "temporary2.dta"
-sort id ${timeUnit}
-
-gen ${xVar2}_av = ${xVar2} if id==999999
-bysort ${timeUnit} (${xVar2}_av): replace ${xVar2}_av = ${xVar2}_av[1]
-gen re_${xVar2} = 1*(${xVar2}/${xVar2}_av)
-label var re_${xVar2}  "Relative ${xVar2}  (Average=1)"
-drop ${xVar2}_av
-sort id ${timeUnit}
-
-drop if id == 999999
-rm "temporary2.dta"
-
-
-save "temporary3.dta",replace
-use  "temporary3.dta"
-
-collapse ${xVar3}, by(${timeUnit})
-gen  id=999999
-append using "temporary3.dta"
-sort id ${timeUnit}
-
-gen ${xVar3}_av = ${xVar3} if id==999999
-bysort ${timeUnit} (${xVar3}_av): replace ${xVar3}_av = ${xVar3}_av[1]
-gen re_${xVar3} = 1*(${xVar3}/${xVar3}_av)
-label var re_${xVar3}  "Relative ${xVar3}  (Average=1)"
-drop ${xVar3}_av
-sort id ${timeUnit}
-
-drop if id == 999999
-rm "temporary3.dta"
-
 
 * order variables
 order ${csUnitName}, before(${timeUnit})
