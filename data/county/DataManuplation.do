@@ -62,5 +62,6 @@ gen urbanization = urban_pop * 100 / totalpop
 
 drop if year <= 2000 | year >= 2022
 
-save "CleanData.csv", replace
 save "CleanData.dta", replace
+
+export delimited using "D:\Github Desktop\Master_thesis\data\county\CleanData.csv", replace
