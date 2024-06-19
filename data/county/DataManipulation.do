@@ -44,6 +44,7 @@ predict plngdppc, xb
 quietly xtreg lnpgdp lnnpp i.year i.citycode
 predict plnpgdp, xb
 
+*Generate new variables
 replace modis_type10 = 0 if missing(modis_type10)
 replace modis_type12 = 0 if missing(modis_type12)
 replace modis_type13 = 0 if missing(modis_type13)
@@ -60,8 +61,24 @@ gen cropland_share = (modis_type10 + modis_type12 + modis_type14) * 100 / total_
 gen popden = log(totalpop*100 / total_area)
 gen urbanization = urban_pop * 100 / totalpop
 
+*Drop years
 drop if year <= 2000 | year >= 2022
 
+*Save long panel
 save "CleanData.dta", replace
 
 export delimited using "D:\Github Desktop\Master_thesis\data\county\CleanData.csv", replace
+
+*For visualization and other purposes
+
+*Keep necessary variables
+keep id year county countycode city citycode province provincecode reggdp reggdp_primary perreggdp plngdp plngdppc plnpgdp nonagri_share urbanland urbanland_share cropland cropland_share popden urbanization
+
+*Keep years
+keep if year == 2001 | year == 2011 | year == 2021
+
+*Reshape to wide
+reshape wide reggdp reggdp_primary perreggdp plngdp plngdppc plnpgdp nonagri_share urbanland urbanland_share cropland cropland_share popden urbanization, i(id) j(year)
+
+*Save wide panel (2001,2011,2021)
+export delimited using "D:\Github Desktop\Master_thesis\data\county\CleanData_wide.csv", replace
