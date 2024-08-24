@@ -4,10 +4,15 @@ clear all
 cd "D:\Github Desktop\Master_thesis\data\county"
 use "ADM3.dta", replace
 *drop if citycode == 460300
+
+*Drop years
+drop if year <= 2000 | year >= 2022
+
 egen id = group(countycode)
 xtset countycode year
 order id year
 xtsum
+
 
 *Specify central, western and eastern regions
 gen location = 1 if provincecode == 140000 | provincecode== 340000 | provincecode == 360000 | provincecode == 410000 | provincecode == 420000 | provincecode == 430000
@@ -32,17 +37,23 @@ gen lnnpp = log(modnpp * 10000 + 1)
 gen lngdppc = log(perreggdp * 10000 + 1)
 gen lnvlpc = log(vl3m * 10000 + 1)
 
-*Predict GDP
-quietly xtreg lngdp lnvl i.year i.citycode
-predict plngdp, xb
-
-*Predict GDPpc
-quietly xtreg lngdppc lnvlpc i.year i.citycode
-predict plngdppc, xb
+gen lnnpgdp = log((reggdp_secondary + reggdp_tertiary)* 10000 + 1)
+gen lnvl_urban = log(vl3s_urban * 10000 + 1)
 
 *Predict Primary GDP
 quietly xtreg lnpgdp lnnpp i.year i.citycode
 predict plnpgdp, xb
+
+*Predict Non-primary GDP
+quietly xtreg lnnpgdp lnvl_urban i.year i.citycode
+predict plnnpgdp, xb
+
+*Generate total logged predicted GDP
+gen plngdp = log(exp(plnpgdp) + exp(plnnpgdp))
+
+*Predict GDPpc
+quietly xtreg lngdppc lnvlpc i.year i.citycode
+predict plngdppc, xb
 
 *Generate new variables
 replace modis_type10 = 0 if missing(modis_type10)
@@ -60,9 +71,6 @@ replace cropland = 0 if missing(cropland)
 gen cropland_share = (modis_type10 + modis_type12 + modis_type14) * 100 / total_are
 gen popden = log(totalpop*100 / total_area)
 gen urbanization = urban_pop * 100 / totalpop
-
-*Drop years
-drop if year <= 2000 | year >= 2022
 
 *Save long panel
 save "CleanData.dta", replace
@@ -82,3 +90,23 @@ reshape wide reggdp reggdp_primary perreggdp plngdp plngdppc plnpgdp nonagri_sha
 
 *Save wide panel (2001,2011,2021)
 export delimited using "D:\Github Desktop\Master_thesis\data\county\CleanData_wide.csv", replace
+
+
+*Extension: Does sectored GDPpc predicts better?
+*gen lnnpgdppc = log(((reggdp_secondary + reggdp_tertiary) / popnum) * 10000 + 1)
+*gen lnvlpc_urban = log(vl3m_urban * 10000 + 1)
+
+*Predict non-primary gdppc
+*quietly xtreg lnnpgdppc lnvlpc_urban i.year i.citycode
+*predict plnnpgdppc, xb
+
+*Predict primary gdppc
+*We have no primary gdppc, so we used predicted total primary gdp to divide population
+*gen plnpgdppc = log(exp(plnpgdp) / popnum)
+
+*Merge
+*gen plngdppc_by_sector = log(exp(plnpgdppc) + exp(plnnpgdppc))
+
+*Test R2
+*xtreg lngdppc plngdppc i.year, fe r
+*xtreg lngdppc plngdppc_by_sector i.year, fe r

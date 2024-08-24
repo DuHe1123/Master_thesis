@@ -131,8 +131,8 @@ order id, before(${csUnitName})
 * Export data to csv
 export delimited using "../results/Dataset_clubs.csv", replace
 save "../results/Dataset_clubs.dta", replace
-export delimited using "../data/Dataset_clubs.csv", replace
-save "../data/Dataset_clubs.dta", replace
+export delimited using "../county/Dataset_clubs.csv", replace
+save "../county/Dataset_clubs.dta", replace
 
 *-------------------------------------------------------
 ***************** Plot the clubs  *********************
@@ -180,10 +180,10 @@ summarize ${timeUnit}
 scalar finalYear = r(max)
 keep if ${timeUnit} == `=finalYear'
 
-keep id ${csUnitName} finalclub_${xVar}
-sort finalclub_${xVar} ${csUnitName}
-save "../data/${dataSet}_clubsList.dta", replace
-export delimited using "../data/${dataSet}_clubsList.csv", replace
+keep id ${csUnitName} fclub_${xVar}
+sort fclub_${xVar} ${csUnitName}
+save "../county/${dataSet}_clubsList.dta", replace
+export delimited using "../county/${dataSet}_clubsList.csv", replace
 
 
 *-------------------------------------------------------

@@ -2,11 +2,11 @@ clear all
 
 *Import Weight Matrix
 cd "D:\Github Desktop\Master_thesis\data\county"
-use "W_matrix2.dta", replace
+use "Wqueen_rs.dta", replace
 gen id = _n
 order id, first
 spset id
-spmatrix fromdata WqueenS = v*, normalize(row) replace
+spmatrix fromdata WqueenS = v*, replace
 spmatrix summarize WqueenS
 
 
@@ -423,7 +423,7 @@ mtitle("SEM" "SEM" "SEM" "SEM" "SEM") ///
 star(* 0.10 ** 0.05 *** 0.01)
 
 *Compare the SDMs
-esttab SDM cSDM eSDM wSDM neSDM , label stats(AIC) mtitle("SEM" "cSEM" "eSEM" "wSEM" "neSEM") se b(%9.3f)
+esttab SDM cSDM eSDM wSDM neSDM , label stats(AIC) mtitle("SDM" "cSDM" "eSDM" "wSDM" "neSDM") se b(%9.3f)
 
 esttab SDM cSDM eSDM wSDM neSDM using "AllSDM.tex",replace ///
 cells(b(star fmt(%9.3f)) se(par)) ///
@@ -434,7 +434,7 @@ star(* 0.10 ** 0.05 *** 0.01)
 
 
 *Scatterfit
-scatterfit gdpgr plngdppc2001, ci vce(robust) regparameters(coef sig pval r2 nobs) parpos(60 6)
+scatterfit gdpgr plngdppc2001, ci vce(robust) regparameters(coef sig pval r2 nobs) parpos(2.7 10)
 
 scatterfit gdpgr plngdppc2001, vce(robust) regparameters(coef sig pval r2 nobs) parpos(2.8 10) by(location)
 
