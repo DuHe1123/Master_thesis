@@ -80,10 +80,10 @@ export delimited using "D:\Github Desktop\Master_thesis\data\county\CleanData.cs
 *For visualization and other purposes
 
 *Keep necessary variables
-keep id year county countycode city citycode province provincecode reggdp reggdp_primary perreggdp plngdp plngdppc plnpgdp nonagri_share urbanland urbanland_share cropland cropland_share popden urbanization
+keep id year county countycode city citycode province provincecode reggdp reggdp_primary perreggdp plngdp plngdppc plnpgdp nonagri_share urbanland urbanland_share cropland cropland_share popden urbanization location
 
 *Keep only the plngdppc variable and reshape, save into a csv
-*keep id year plngdppc county countycode city citycode province provincecode
+*keep id year plngdppc county countycode city citycode province provincecode location
 *reshape wide plngdppc, i(id) j(year)
 *export delimited using "D:\Github Desktop\Master_thesis\data\county\CleanData_wide_plngdppc_only.csv", replace
 
