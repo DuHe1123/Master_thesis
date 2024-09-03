@@ -20,7 +20,7 @@ cd "D:\Github Desktop\Master_thesis\data\county"
 *-------------------------------------------------------
 
 * Load dataset of determinants
-use "Data_clubs.dta"
+use "clubs_with_spatiallag.dta"
 *import delimited "../data/longPanel_N274T17.csv", clear
 
 * Merge with clubs panel dataset
@@ -41,6 +41,7 @@ xtsum
 *-------------------------------------------------------
 global ylist fclub_trend_plngdppc
 global xlist plngdppc nonagri_share popden urbanization
+*global xlist plngdppc nonagri_share popden urbanization w_plngdppc w_nonagri_share w_popden w_urbanization
 global modelName model01 
 global initialYear 2001
 
