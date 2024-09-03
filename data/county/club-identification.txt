@@ -2,18 +2,13 @@
       name:  <unnamed>
        log:  D:\Github Desktop\Master_thesis\data\county\club-identification.txt
   log type:  text
- opened on:  24 Aug 2024, 18:35:47
+ opened on:   3 Sep 2024, 16:33:41
 
 . 
-. *-------------------------------------------------------
-. ***************** Import and set dataset  **************
-. *-------------------------------------------------------
-. 
-. ** Load data
-. *use "../data/${dataSet}.dta", clear
-. 
-. * keep necessary variables
-. *rename city_id id 
+end of do-file
+
+. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
+
 . *keep id countycode city citycode province provincecode plngdppc ${csUnitName} ${timeUnit} 
 . order id ${timeUnit} county
 
@@ -26,18 +21,18 @@ Panel variable: id (strongly balanced)
          Delta: 1 unit
 
 . 
-. *-------------------------------------------------------
-. ***************** Compute long-run trend  ***********
-. *-------------------------------------------------------
-. 
+end of do-file
+
+. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
+
 . *Filter total gdppc
 . pfilter plngdppc, method(hp) trend(trend_plngdppc) smooth(400)
 
 . 
-. *-------------------------------------------------------
-. ***************** Apply PS convergence test  ***********
-. *-------------------------------------------------------
-. 
+end of do-file
+
+. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
+
 . * run logt regression
 . putexcel set "../results/results.xlsx", sheet(logtTest) replace
 Note: File will be replaced when the first putexcel command is issued.
@@ -80,7 +75,10 @@ file ../results/results.xlsx saved
 file ../results/results.xlsx saved
 
 . 
-. * run clustering algorithm (NOTE: the adjust option changes the number of clubs from 4 to 5)
+end of do-file
+
+. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
+
 . putexcel set "../results/results.xlsx", sheet(initialClusters) modify
 
 .     psecta ${xVar}, adjust  name(${csUnitName}) kq(0.333) gen(club_${xVar}) // total
@@ -971,7 +969,10 @@ file ../results/results.xlsx saved
 file ../results/results.xlsx saved
 
 . 
-. 
+end of do-file
+
+. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
+
 . * run clustering merge algorithm
 . putexcel set "../results/results.xlsx", sheet(mergingClusters) modify
 
@@ -1263,7 +1264,10 @@ file ../results/results.xlsx saved
 file ../results/results.xlsx saved
 
 . 
-. 
+end of do-file
+
+. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
+
 . * list final clusters
 . putexcel set "../results/results.xlsx", sheet(finalClusters) modify
 
@@ -1949,12 +1953,13 @@ fclub_tren~c |     59,787    2.713734    1.040072          1          5
 
 . 
 . save "Data_clubs.dta", replace
+(file Data_clubs.dta not found)
 file Data_clubs.dta saved
 
 . 
 end of do-file
 
-. do "C:\Users\duhef\AppData\Local\Temp\STD3958_000000.tmp"
+. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
 
 . ** Generate relative variable (useful for ploting)
 . save "temporary1.dta",replace
@@ -2003,99 +2008,18 @@ file temporary1.dta saved
 . 
 . * Export data to csv
 . export delimited using "../results/Dataset_clubs.csv", replace
-(file ../results/Dataset_clubs.csv not found)
 file ../results/Dataset_clubs.csv saved
 
 . save "../results/Dataset_clubs.dta", replace
-(file ../results/Dataset_clubs.dta not found)
 file ../results/Dataset_clubs.dta saved
-
-. export delimited using "../data/Dataset_clubs.csv", replace
-(file ../data/Dataset_clubs.csv not found)
-file ../data/Dataset_clubs.csv could not be opened
-r(603);
-
-end of do-file
-
-r(603);
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD3958_000000.tmp"
 
 . export delimited using "../county/Dataset_clubs.csv", replace
 file ../county/Dataset_clubs.csv saved
 
 . save "../county/Dataset_clubs.dta", replace
-(file ../county/Dataset_clubs.dta not found)
 file ../county/Dataset_clubs.dta saved
 
 . 
 end of do-file
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD3958_000000.tmp"
-
-. collapse (mean) re_${xVar}, by(finalclub_${xVar} ${timeUnit})
-variable finalclub_trend_plngdppc not found
-(error in option by())
-r(111);
-
-end of do-file
-
-r(111);
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD3958_000000.tmp"
-
-. summarize ${timeUnit}
-
-    Variable |        Obs        Mean    Std. dev.       Min        Max
--------------+---------------------------------------------------------
-        year |     59,808        2011    6.055351       2001       2021
-
-. scalar finalYear = r(max)
-
-. keep if ${timeUnit} == `=finalYear'
-(56,960 observations deleted)
-
-. 
-. keep id ${csUnitName} finalclub_${xVar}
-variable finalclub_trend_plngdppc not found
-r(111);
-
-end of do-file
-
-r(111);
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD3958_000000.tmp"
-
-. summarize ${timeUnit}
-
-    Variable |        Obs        Mean    Std. dev.       Min        Max
--------------+---------------------------------------------------------
-        year |      2,848        2021           0       2021       2021
-
-. scalar finalYear = r(max)
-
-. keep if ${timeUnit} == `=finalYear'
-(0 observations deleted)
-
-. 
-. keep id ${csUnitName} fclub_${xVar}
-
-. sort finalclub_${xVar} ${csUnitName}
-variable finalclub_trend_plngdppc not found
-r(111);
-
-end of do-file
-
-r(111);
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD3958_000000.tmp"
-
-. summarize ${timeUnit}
-variable year not found
-r(111);
-
-end of do-file
-
-r(111);
 
 . exit, clear
