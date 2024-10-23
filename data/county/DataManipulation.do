@@ -77,6 +77,9 @@ save "CleanData.dta", replace
 
 export delimited using "D:\Github Desktop\Master_thesis\data\county\CleanData.csv", replace
 
+*Plot
+scatterfit lngdppc lnvlpc, ci vce(robust) regparameters(coef sig pval r2 nobs) parpos(2.7 10)
+
 *For visualization and other purposes
 
 *Keep necessary variables

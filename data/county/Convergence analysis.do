@@ -401,13 +401,13 @@ star(* 0.10 ** 0.05 *** 0.01)
 
 
 *Compare the OLSs
-esttab OLS cOLS eOLS wOLS neOLS , label stats(AIC) mtitle("OLS" "cOLS" "eOLS" "wOLS" "neOLS") se b(%9.3f)
+esttab iOLS OLS cOLS eOLS wOLS neOLS , label stats(AIC) mtitle("iOLS" "OLS" "cOLS" "eOLS" "wOLS" "neOLS") se b(%9.3f)
 
-esttab OLS cOLS eOLS wOLS neOLS using "AllOLS.tex",replace ///
+esttab iOLS OLS cOLS eOLS wOLS neOLS using "AllOLS.tex",replace ///
 cells(b(star fmt(%9.3f)) se(par)) ///
 label stats(ll aic bic N, fmt(%9.1f) labels("Log likelihood" "AIC" "BIC" "Observations")) ///
 title("Regression Results") ///
-mtitle("OLS" "OLS" "OLS" "OLS" "OLS") ///
+mtitle("total" "total" "central" "eastern" "western" "northeastern") ///
 star(* 0.10 ** 0.05 *** 0.01)
 
 
@@ -419,7 +419,7 @@ esttab SEM cSEM eSEM wSEM neSEM using "AllSEM.tex",replace ///
 cells(b(star fmt(%9.3f)) se(par)) ///
 label stats(ll aic bic N, fmt(%9.1f) labels("Log likelihood" "AIC" "BIC" "Observations")) ///
 title("Regression Results") ///
-mtitle("SEM" "SEM" "SEM" "SEM" "SEM") ///
+mtitle("total" "central" "eastern" "western" "northeastern") /// 
 star(* 0.10 ** 0.05 *** 0.01)
 
 *Compare the SDMs
@@ -429,7 +429,7 @@ esttab SDM cSDM eSDM wSDM neSDM using "AllSDM.tex",replace ///
 cells(b(star fmt(%9.3f)) se(par)) ///
 label stats(ll aic bic N, fmt(%9.1f) labels("Log likelihood" "AIC" "BIC" "Observations")) ///
 title("Regression Results") ///
-mtitle("SDM" "SDM" "SDM" "SDM" "SDM") ///
+mtitle("total" "central" "eastern" "western" "northeastern") /// 
 star(* 0.10 ** 0.05 *** 0.01)
 
 
