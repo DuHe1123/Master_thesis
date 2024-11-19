@@ -20,7 +20,7 @@ cd "D:\Github Desktop\Master_thesis\data\county"
 *-------------------------------------------------------
 
 * Load dataset of determinants
-use "clubs_with_spatiallag.dta"
+use "Dataset_clubs.dta"
 *import delimited "../data/longPanel_N274T17.csv", clear
 
 * Merge with clubs panel dataset
@@ -81,8 +81,11 @@ margins, dydx(*) atmeans predict(outcome(5))
 * Export formated table of marginal effects
 
 ologit $ylist $xlist, robust
+outreg2 using "../results/${modelName}.xls", tex(fragment)  replace dec(3) ctitle(Total) label nonotes addstat() addnote(NOTE: All predictors at their mean value.)
+
+ologit $ylist $xlist, robust
 margins, dydx(*) atmeans predict(outcome(1)) post
-outreg2 using "../results/${modelName}.xls", tex(fragment)  replace dec(3) ctitle(Club 1) label nonotes addstat() addnote(NOTE: All predictors at their mean value.)
+outreg2 using "../results/${modelName}.xls", tex(fragment)  append dec(3) ctitle(Club 1) label nonotes addstat() addnote(NOTE: All predictors at their mean value.)
 
 ologit $ylist $xlist, robust
 margins, dydx(*) atmeans predict(outcome(2)) post

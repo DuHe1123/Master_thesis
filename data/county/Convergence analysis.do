@@ -109,23 +109,25 @@ title("Regression Results") ///
 mtitle("OLS" "OLS" "SAR" "SEM" "SLX" "SDM") ///
 star(* 0.10 ** 0.05 *** 0.01)
 
+
 *Wald test
 *Reduce to OLS?
-*spregress $ylist $xlist, ml dvarlag(WqueenS) ivarlag(WqueenS: $xlist)
+spregress $ylist $xlist, ml dvarlag(WqueenS) ivarlag(WqueenS: $xlist)
 
 *Reduce to SLX?
-*test ([WqueenS]$xlist = 0)
+test ([WqueenS]$ylist = 0)
 
 *Reduce to SAR?
-*test ([WqueenS]$ylist = 0)
+test ([WqueenS]plngdppc2001 = 0)([WqueenS]popden2001 = 0)([WqueenS]nonagri_share2001 = 0)([WqueenS]urbanization2001 = 0)
 
 *Reduce to SEM?
-*testnl ([WqueenS]$xlist = -[WqueenS]$ylist*[$ylist]$xlist)
+testnl ([WqueenS]plngdppc2001 = -[WqueenS]gdpgr*[gdpgr]plngdppc2001)([WqueenS]popden2001 = -[WqueenS]gdpgr*[gdpgr]popden2001)([WqueenS]nonagri_share2001 = -[WqueenS]gdpgr*[gdpgr]nonagri_share2001)([WqueenS]urbanization2001 = -[WqueenS]gdpgr*[gdpgr]urbanization2001)
 
 
-
-
-
+*LM test
+spatwmat using "Wqueen_rs.dta", name(W_diag)
+quiet reg $ylist $xlist
+spatdiag, weights(W_diag)
 
 
 

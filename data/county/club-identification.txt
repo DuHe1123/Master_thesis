@@ -2,13 +2,18 @@
       name:  <unnamed>
        log:  D:\Github Desktop\Master_thesis\data\county\club-identification.txt
   log type:  text
- opened on:   3 Sep 2024, 16:33:41
+ opened on:   6 Nov 2024, 15:48:59
 
 . 
-end of do-file
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
-
+. *-------------------------------------------------------
+. ***************** Import and set dataset  **************
+. *-------------------------------------------------------
+. 
+. ** Load data
+. *use "../data/${dataSet}.dta", clear
+. 
+. * keep necessary variables
+. *rename city_id id 
 . *keep id countycode city citycode province provincecode plngdppc ${csUnitName} ${timeUnit} 
 . order id ${timeUnit} county
 
@@ -21,18 +26,18 @@ Panel variable: id (strongly balanced)
          Delta: 1 unit
 
 . 
-end of do-file
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
-
+. *-------------------------------------------------------
+. ***************** Compute long-run trend  ***********
+. *-------------------------------------------------------
+. 
 . *Filter total gdppc
 . pfilter plngdppc, method(hp) trend(trend_plngdppc) smooth(400)
 
 . 
-end of do-file
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
-
+. *-------------------------------------------------------
+. ***************** Apply PS convergence test  ***********
+. *-------------------------------------------------------
+. 
 . * run logt regression
 . putexcel set "../results/results.xlsx", sheet(logtTest) replace
 Note: File will be replaced when the first putexcel command is issued.
@@ -75,10 +80,7 @@ file ../results/results.xlsx saved
 file ../results/results.xlsx saved
 
 . 
-end of do-file
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
-
+. * run clustering algorithm (NOTE: the adjust option changes the number of clubs from 4 to 5)
 . putexcel set "../results/results.xlsx", sheet(initialClusters) modify
 
 .     psecta ${xVar}, adjust  name(${csUnitName}) kq(0.333) gen(club_${xVar}) // total
@@ -969,10 +971,7 @@ file ../results/results.xlsx saved
 file ../results/results.xlsx saved
 
 . 
-end of do-file
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
-
+. 
 . * run clustering merge algorithm
 . putexcel set "../results/results.xlsx", sheet(mergingClusters) modify
 
@@ -1264,10 +1263,7 @@ file ../results/results.xlsx saved
 file ../results/results.xlsx saved
 
 . 
-end of do-file
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
-
+. 
 . * list final clusters
 . putexcel set "../results/results.xlsx", sheet(finalClusters) modify
 
@@ -1953,14 +1949,13 @@ fclub_tren~c |     59,787    2.713734    1.040072          1          5
 
 . 
 . save "Data_clubs.dta", replace
-(file Data_clubs.dta not found)
 file Data_clubs.dta saved
 
 . 
-end of do-file
-
-. do "C:\Users\duhef\AppData\Local\Temp\STD460_000000.tmp"
-
+. *-------------------------------------------------------
+. ***************** Generate relative variable (for ploting)
+. *-------------------------------------------------------
+. 
 . ** Generate relative variable (useful for ploting)
 . save "temporary1.dta",replace
 (file temporary1.dta not found)

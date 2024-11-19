@@ -1,0 +1,21 @@
+		(1)	(2)	(3)	(4)	(5)	(6)	(7)	(8)	(9)	(10)	(11)	(12)
+VARIABLES	LABELS	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect	Pooled OLS	Between Estimator	TW Fixed Effect
+													
+lnvl	lnvl	0.489***	0.552***	0.254***									
+		(0.002)	(0.007)	(0.028)									
+lnvl_urban	lnvl_urban				0.247***	0.255***	0.130***						
+					(0.001)	(0.004)	(0.011)						
+lnnpp	lnnpp							0.338***	0.431***	0.670***			
+								(0.005)	(0.016)	(0.041)			
+lnvlpc	lnvlpc										0.281***	0.236***	0.167***
+											(0.002)	(0.005)	(0.009)
+													
+Observations		49,911	49,911	49,909	49,169	49,169	49,164	49,686	49,686	49,682	48,370	48,370	48,366
+Regional FE		NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES
+Year FE		NO	NO	YES	NO	NO	YES	NO	NO	YES	NO	NO	YES
+R2_o		0.497		0.750	0.392		0.749	0.0871		0.616	0.395		0.844
+Number of id			2,689			2,615			2,608			2,642	
+R2_b			0.671			0.557			0.216			0.505	
+R2_w				0.172			0.141			0.293			0.226
+Standard errors in parentheses													
+*** p<0.01, ** p<0.05, * p<0.1													
